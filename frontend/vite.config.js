@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:3000",
+        target: "https://aa-uchat-2-backend.onrender.com",
         secure: false,
       },
     },
