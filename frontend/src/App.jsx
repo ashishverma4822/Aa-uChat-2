@@ -11,7 +11,7 @@ const App = () => {
   const { authUser } = useAuthContext();
 
   return (
-    <div className="p-4 h-screen flex items-center justify-center bg-custom-bg text-neon-blue">
+    <div className="p-4 h-screen flex items-center justify-center">
       <Routes>
         <Route
           path="/"
