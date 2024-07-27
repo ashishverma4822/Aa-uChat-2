@@ -6,12 +6,12 @@ const app = express()
 
 const server = http.createServer(app)
 
-const io = new Server(server, {
-  cors: {
-    origin: ["https://aa-u-chat-2.vercel.app"],
-    methods: ["GET", "POST"],
-  },
-})
+const io = require('socket.io')(server, {
+    pingTimeout: 60000,
+    cors: {
+        origin: "*",
+    },
+});
 
 export const getReceiverSocketId = (receiverId) => {
   return userSocketMap[receiverId]
