@@ -1,12 +1,11 @@
-import { Server } from "socket.io"
-import http from "http"
-import express from "express"
+import { Server as SocketIO } from "socket.io";
+import http from "http";
+import express from "express";
 
-const app = express()
+const app = express();
+const server = http.createServer(app);
 
-const server = http.createServer(app)
-
-const io = require('socket.io')(server, {
+const io = new SocketIO(server, {
     cors: {
         origin: "*",
         methods: ["GET", "POST"],
@@ -14,28 +13,17 @@ const io = require('socket.io')(server, {
 });
 
 export const getReceiverSocketId = (receiverId) => {
-  return userSocketMap[receiverId]
-}
+  return userSocketMap[receiverId];
+};
 
-const userSocketMap = {}
+const userSocketMap = {};
 
 io.on("connection", (socket) => {
-  console.log("a user connected", socket.id)
+  console.log("a user connected", socket.id);
 
-  const userId = socket.handshake.query.userId
+  const userId = socket.handshake.query.userId;
 
   if (userId !== "undefined") {
-    userSocketMap[userId] = socket.id
+    userSocketMap[userId] = socket.id;
   }
-
-  // io.emit  events send to all the connected clients
-  io.emit("getOnlineUsers", Object.keys(userSocketMap))
-
-  socket.on("disconnect", () => {
-    console.log("User disconnected", socket.id)
-    delete userSocketMap[userId]
-    io.emit("getOnlineUsers", Object.keys(userSocketMap))
-  })
-})
-
-export { app, server, io }
+});
