@@ -15,7 +15,7 @@ const handleInputErrors = ({
   }
 
   if (password !== confirmPassword) {
-    toast.error("Password do not match")
+    toast.error("Passwords do not match")
     return true
   }
 
@@ -33,7 +33,7 @@ const useSignup = () => {
     confirmPassword,
     gender,
   }) => {
-    const checkError = handleInputErrors({
+    const hasError = handleInputErrors({
       username,
       email,
       password,
@@ -41,7 +41,7 @@ const useSignup = () => {
       gender,
     })
 
-    if (checkError) {
+    if (hasError) {
       return
     }
 
@@ -62,15 +62,18 @@ const useSignup = () => {
 
       const data = await res.json()
 
-      if (data.error) {
-        throw new Error(data.error)
+      if (!res.ok) {
+        if (data.error === "Email already exists") {
+          toast.error("Email is already registered")
+        } else {
+          toast.error(data.error || "An error occurred")
+        }
+        return
       }
 
-      //   console.log(data)
-
       localStorage.setItem("user", JSON.stringify(data))
-
       setAuthUser(data)
+      toast.success("Account created successfully")
     } catch (error) {
       toast.error(error.message)
     } finally {
