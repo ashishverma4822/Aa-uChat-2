@@ -8,7 +8,7 @@ const server = http.createServer(app)
 
 const io = new Server(server, {
   cors: {
-    origin: ["https://aa-uchat-2.onrender.com"],
+    origin: ["https://aa-u-chat-2.vercel.app"],
     methods: ["GET", "POST"],
   },
 })
