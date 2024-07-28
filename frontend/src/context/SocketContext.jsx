@@ -16,7 +16,7 @@ export const SocketContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const socket = io("https://aa-uchat-2-backend.onrender.com", {
+      const socket = io("https://aa-uchat-2-backend-vrrl.onrender.com", {
         query: {
           userId: authUser._id,
         },
